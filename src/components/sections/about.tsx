@@ -45,7 +45,7 @@ export function About() {
           </div>
           <div className="w-full h-80 md:h-full rounded-2xl overflow-hidden shadow-lg">
             <Image
-              src="https://placehold.co/600x700.png"
+              src="https://raw.githubusercontent.com/amishardev/Healer-s-Homoeopathy-images/refs/heads/main/F12.jpg"
               alt="Dr. Surendra Kumar Agnihotri, Founder of Healers Clinic"
               data-ai-hint="professional man"
               width={600}
