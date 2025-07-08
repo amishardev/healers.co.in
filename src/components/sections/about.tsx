@@ -45,8 +45,9 @@ export function About() {
           </div>
           <div className="w-full h-80 md:h-full rounded-2xl overflow-hidden shadow-lg">
             <Image
-              src="http://jawaharhmcgov.co.in/assets/img/F12.jpg"
+              src="https://placehold.co/600x700.png"
               alt="Dr. Surendra Agnihotri, Founder of Healers Clinic"
+              data-ai-hint="professional man"
               width={600}
               height={700}
               className="object-cover object-top w-full h-full transform transition-transform duration-500 hover:scale-105"
