@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 
 const heroImage = {
-  src: "https://github.com/amishardev/Healer-s-Homoeopathy-images/blob/main/ChatGPT%20Image%20Jul%208,%202025,%2009_31.png?raw=true",
+  src: "https://raw.githubusercontent.com/amishardev/Healer-s-Homoeopathy-images/main/ChatGPT%20Image%20Jul%208,%202025,%2009_31.png",
   alt: "Natural homeopathic remedies and herbs on a wooden table",
   hint: "homeopathy herbs"
 }
