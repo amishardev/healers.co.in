@@ -70,20 +70,14 @@ Email Notifications System by Amish Sharma
 
     const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    try {
-      window.location.href = mailtoLink;
-      toast({
-        title: "Opening your email client",
-        description: "Please review and send the pre-filled email to request your appointment.",
-      });
-    } catch (error) {
-      console.error("Failed to open mailto link:", error);
-      toast({
-        variant: "destructive",
-        title: "Could not open email client",
-        description: "Please copy the details and send an email manually to healingartclinic@gmail.com",
-      });
-    }
+    // Instead of navigating, we use window.open() which is a more standard way to handle mailto links.
+    // This should be more reliable across different browsers.
+    window.open(mailtoLink);
+
+    toast({
+      title: "Opening your email client",
+      description: "Please review and send the pre-filled email to request your appointment.",
+    });
 
     form.reset();
   }
