@@ -46,7 +46,7 @@ export function Booking() {
   })
 
   function onSubmit(values: z.infer<typeof bookingFormSchema>) {
-    const recipient = 'sharmaamish911@gmail.com';
+    const recipient = 'healingartclinic@gmail.com';
     const subject = `🗓️ New Appointment Request from ${values.name}`;
     const body = `
 Dear Dr. Agnihotri,
