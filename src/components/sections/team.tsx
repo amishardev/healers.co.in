@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card"
 
 const teamMembers = [
   {
-    name: "Dr. Surendra Agnihotri",
+    name: "Dr. Surendra Kumar Agnihotri",
     role: "Founder & Chief Homeopath",
     bio: "With 15+ years of experience, Dr. Agnihotri is dedicated to classical homeopathy and patient-centric care.",
     image: { src: "https://placehold.co/400x400.png", hint: "professional man" }
