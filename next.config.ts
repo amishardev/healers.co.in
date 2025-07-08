@@ -2,7 +2,6 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
-  output: 'export',
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -20,18 +19,6 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'raw.githubusercontent.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'http',
-        hostname: 'jawaharhmcgov.co.in',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'github.com',
         port: '',
         pathname: '/**',
       },
