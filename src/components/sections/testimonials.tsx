@@ -15,7 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const testimonials = [
   {
-    quote: "After struggling with chronic migraines for years, I found lasting relief through Dr. Surendra Agnihotri’s treatment. His deep understanding and holistic approach at Healers Homeopathic Clinic changed my life.",
+    quote: "After struggling with chronic migraines for years, I found lasting relief through Dr. Surendra Kumar Agnihotri’s treatment. His deep understanding and holistic approach at Healers Homeopathic Clinic changed my life.",
     name: "Anjali Mehta",
     avatar: { src: "https://placehold.co/100x100.png", hint: "happy woman" }
   },
@@ -25,7 +25,7 @@ const testimonials = [
     avatar: { src: "https://placehold.co/100x100.png", hint: "smiling man" }
   },
   {
-    quote: "My child had frequent colds and low immunity. Thanks to Dr. Surendra Agnihotri, we’ve seen a major improvement in her health. Healers Homeopathic Clinic is a blessing for our family.",
+    quote: "My child had frequent colds and low immunity. Thanks to Dr. Surendra Kumar Agnihotri, we’ve seen a major improvement in her health. Healers Homeopathic Clinic is a blessing for our family.",
     name: "Priya Nambiar",
     avatar: { src: "https://placehold.co/100x100.png", hint: "woman face" }
   }
