@@ -37,7 +37,7 @@ export function About() {
                 <div>
                   <h3 className="font-bold text-lg">Our Founder</h3>
                   <p className="text-sm text-muted-foreground">
-                    Dr. Surendra Agnihotri, with over 15 years of experience in classical homeopathy.
+                    Dr. Surendra Kumar Agnihotri, with over 15 years of experience in classical homeopathy.
                   </p>
                 </div>
               </div>
@@ -46,7 +46,7 @@ export function About() {
           <div className="w-full h-80 md:h-full rounded-2xl overflow-hidden shadow-lg">
             <Image
               src="https://placehold.co/600x700.png"
-              alt="Dr. Surendra Agnihotri, Founder of Healers Clinic"
+              alt="Dr. Surendra Kumar Agnihotri, Founder of Healers Clinic"
               data-ai-hint="professional man"
               width={600}
               height={700}
