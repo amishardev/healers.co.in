@@ -7,7 +7,7 @@ export function Banner() {
       <Link href="https://dietaryguide.in/app" target="_blank" rel="noopener noreferrer">
         <div className="relative w-full aspect-[16/5] md:aspect-[16/4] overflow-hidden shadow-lg">
           <Image
-            src="https://github.com/amishardev/navdhiweb/blob/main/Blue%20Gradient%20Modern%20Business%20Investments%20LinkedIn%20Banner.png?raw=true"
+            src="https://github.com/amishardev/navdhiweb/blob/main/Blue%20Gradient%20Modern%20Business%20Investments%20LinkedIn%20Banner%20(1).png?raw=true"
             alt="Healers Homeopathy Clinic Banner"
             data-ai-hint="abstract gradient"
             fill
