@@ -37,7 +37,7 @@ export function About() {
                 <div>
                   <h3 className="font-bold text-lg">Our Founder</h3>
                   <p className="text-sm text-muted-foreground">
-                    Dr. Surendra Kumar Agnihotri, with over 15 years of experience in classical homeopathy.
+                    Dr. Surendra Kumar Agnihotri, with over 23 years of experience in classical homeopathy.
                   </p>
                 </div>
               </div>
