@@ -1,37 +1,37 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Stethoscope, ShieldCheck, Bone, Brain, Zap, Baby } from "lucide-react"
+import { Stethoscope, ShieldCheck, Bone, Brain, Zap, Baby, Heart, Wind, Leaf, Users } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
 const services = [
   {
-    icon: Stethoscope,
-    title: "Chronic Disease Management",
-    description: "Holistic care for long-term conditions like diabetes, arthritis, and hypertension, focusing on improving quality of life."
+    icon: Brain,
+    title: "Psychiatric & Neurological",
+    description: "Effective treatment for psychiatric cases, psycho-somatic disorders, migraine, headaches, and sleep disorders."
   },
   {
-    icon: ShieldCheck,
-    title: "Allergy & Asthma Treatment",
-    description: "Natural remedies to manage and reduce allergic reactions and respiratory issues, strengthening your immune system."
+    icon: Wind,
+    title: "Respiratory & Allergy",
+    description: "Care for sinusitis, nasal polyps, tonsillitis, asthma, bronchitis, and allergies like recurrent cough & cold."
+  },
+  {
+    icon: Leaf,
+    title: "Gastrointestinal & Liver",
+    description: "Relief from gastritis, ulcers, IBS, piles, fissure, and management of liver diseases including cirrhosis."
   },
   {
     icon: Bone,
     title: "Skin & Hair Disorders",
-    description: "Effective treatment for eczema, psoriasis, acne, and hair fall, addressing the root cause for lasting results."
+    description: "Treating alopecia, hair fall, dandruff, eczema, psoriasis, vitiligo, and warts from the root cause."
   },
   {
-    icon: Brain,
-    title: "Mental Wellness",
-    description: "Support for anxiety, depression, and stress-related disorders through gentle, non-addictive homeopathic solutions."
+    icon: Users,
+    title: "Men's & Women's Health",
+    description: "Holistic solutions for infertility, erectile dysfunction, menstrual disorders, PCOD, fibroids, and prostate issues."
   },
   {
-    icon: Zap,
-    title: "Pain Management",
-    description: "Relief from joint pain, migraines, and other chronic pain conditions without the side effects of conventional medicine."
-  },
-  {
-    icon: Baby,
-    title: "Pediatric & Women's Health",
-    description: "Specialized care for children's common ailments and women's health issues, from infancy to menopause."
+    icon: Heart,
+    title: "Systemic & Chronic Ailments",
+    description: "Management of joint pains, arthritis, thyroid disorders, kidney diseases, and palliative care for cancer."
   }
 ]
 
