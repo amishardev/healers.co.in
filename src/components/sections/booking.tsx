@@ -1,5 +1,7 @@
+
 'use client'
 
+import * as React from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -23,64 +25,112 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { CalendarIcon } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
-import { format } from 'date-fns'
+import { format, addDays, startOfDay, getDay } from 'date-fns'
 import { cn } from '@/lib/utils'
 import { useToast } from '@/hooks/use-toast'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { db } from '@/lib/firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 const bookingFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
   phone: z.string().min(10, 'Please enter a valid phone number.'),
+  city: z.string().min(2, 'Please enter your city or place.'),
+  consultancyMode: z.enum(['Offline', 'Online'], {
+    required_error: 'Please select a consultancy mode.',
+  }),
   date: z.date({ required_error: 'A date is required.' }),
   time: z.string({ required_error: 'A time slot is required.' }),
 })
 
 export function Booking() {
-    const { toast } = useToast()
+  const { toast } = useToast()
+  const [timeSlots, setTimeSlots] = React.useState<string[]>([])
+  const [loading, setLoading] = React.useState(false);
+
   const form = useForm<z.infer<typeof bookingFormSchema>>({
     resolver: zodResolver(bookingFormSchema),
     defaultValues: {
       name: '',
       phone: '',
+      city: '',
+      consultancyMode: 'Offline',
     },
   })
 
-  function onSubmit(values: z.infer<typeof bookingFormSchema>) {
-    const recipient = 'healingartclinic@gmail.com';
-    const subject = `🗓️ New Appointment Request from ${values.name}`;
-    const body = `
-Dear Dr. Agnihotri,
+  const selectedDate = form.watch('date');
 
-You have received a new appointment request via the website:
+  React.useEffect(() => {
+    if (selectedDate) {
+      const dayOfWeek = getDay(selectedDate); // Sunday = 0, Monday = 1, etc.
+      const newTimeSlots = generateTimeSlots(dayOfWeek);
+      setTimeSlots(newTimeSlots);
+      form.setValue('time', ''); // Reset time when date changes
+    }
+  }, [selectedDate, form]);
 
-Patient Details
-Full Name: ${values.name}
-Phone Number: ${values.phone}
+  const generateTimeSlots = (day: number) => {
+    const slots: string[] = [];
+    let startHour: number, startMinute: number, endHour: number;
 
-Appointment Preferences
-Preferred Date: ${format(values.date, 'PPP')}
-Preferred Time Slot: ${values.time}
+    if (day === 0) { // Sunday
+      startHour = 9;
+      startMinute = 30;
+      endHour = 14;
+    } else { // Monday to Saturday
+      startHour = 17;
+      startMinute = 0;
+      endHour = 21;
+    }
 
-Please contact the patient to confirm the booking or provide alternate options if necessary.
+    const interval = 15;
+    const date = new Date();
+    date.setHours(startHour, startMinute, 0, 0);
 
-Warm regards,
-Healers Homeopathic Clinic
-Email Notifications System by Amish Sharma
-`.trim();
+    const endDate = new Date();
+    endDate.setHours(endHour, 0, 0, 0);
 
-    const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Instead of navigating, we use window.open() which is a more standard way to handle mailto links.
-    // This should be more reliable across different browsers.
-    window.open(mailtoLink);
+    while (date < endDate) {
+      const startTime = format(date, 'hh:mm a');
+      date.setMinutes(date.getMinutes() + interval);
+      const endTime = format(date, 'hh:mm a');
+      slots.push(`${startTime} - ${endTime}`);
+    }
 
-    toast({
-      title: "Opening your email client",
-      description: "Please review and send the pre-filled email to request your appointment.",
-    });
+    return slots;
+  };
 
-    form.reset();
+  async function onSubmit(values: z.infer<typeof bookingFormSchema>) {
+    setLoading(true);
+    try {
+      await addDoc(collection(db, 'appointments'), {
+        ...values,
+        date: format(values.date, 'MMMM do, yyyy'), // Store date as a formatted string
+        status: 'Pending',
+        createdAt: serverTimestamp(),
+      });
+
+      toast({
+        title: "Appointment Requested",
+        description: "Thank you! We have received your request and will contact you shortly to confirm.",
+      });
+
+      form.reset();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      toast({
+        variant: "destructive",
+        title: "Submission Error",
+        description: "Could not submit your appointment. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
   }
+  
+  const today = startOfDay(new Date());
+  const maxDate = addDays(today, 10);
 
   return (
     <section id="booking" className="bg-secondary">
@@ -96,31 +146,80 @@ Email Notifications System by Amish Sharma
                 <CardContent>
                     <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Full Name</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="e.g. John Doe" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                            />
+                            <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Phone Number</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="e.g. 9876543210" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                            />
+                        </div>
                         <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Full Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="e.g. John Doe" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
+                            control={form.control}
+                            name="city"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>City / place</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="e.g. Kanpur or Vikas Nagar" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
                         />
                         <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Phone Number</FormLabel>
-                            <FormControl>
-                                <Input placeholder="e.g. 9876543210" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
+                            control={form.control}
+                            name="consultancyMode"
+                            render={({ field }) => (
+                                <FormItem className="space-y-3">
+                                <FormLabel>Mode of Consultancy</FormLabel>
+                                <FormControl>
+                                    <RadioGroup
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                    className="flex flex-col space-y-1"
+                                    >
+                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                        <FormControl>
+                                        <RadioGroupItem value="Offline" />
+                                        </FormControl>
+                                        <FormLabel className="font-normal">
+                                        Offline (In-Clinic)
+                                        </FormLabel>
+                                    </FormItem>
+                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                        <FormControl>
+                                        <RadioGroupItem value="Online" />
+                                        </FormControl>
+                                        <FormLabel className="font-normal">
+                                        Online (Video Call)
+                                        </FormLabel>
+                                    </FormItem>
+                                    </RadioGroup>
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
                         />
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <FormField
@@ -154,7 +253,7 @@ Email Notifications System by Amish Sharma
                                     selected={field.value}
                                     onSelect={field.onChange}
                                     disabled={(date) =>
-                                        date < new Date() || date < new Date("1900-01-01")
+                                        date < today || date > maxDate
                                     }
                                     initialFocus
                                     />
@@ -170,18 +269,22 @@ Email Notifications System by Amish Sharma
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Preferred Time Slot</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <Select onValueChange={field.onChange} value={field.value}>
                                 <FormControl>
-                                    <SelectTrigger>
+                                    <SelectTrigger disabled={!selectedDate}>
                                     <SelectValue placeholder="Select a time" />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</SelectItem>
-                                    <SelectItem value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</SelectItem>
-                                    <SelectItem value="12:00 PM - 01:00 PM">12:00 PM - 01:00 PM</SelectItem>
-                                    <SelectItem value="04:00 PM - 05:00 PM">04:00 PM - 05:00 PM</SelectItem>
-                                    <SelectItem value="05:00 PM - 06:00 PM">05:00 PM - 06:00 PM</SelectItem>
+                                    {timeSlots.length > 0 ? (
+                                        timeSlots.map((slot) => (
+                                            <SelectItem key={slot} value={slot}>{slot}</SelectItem>
+                                        ))
+                                    ) : (
+                                        <SelectItem value="-" disabled>
+                                            Please select a date first
+                                        </SelectItem>
+                                    )}
                                 </SelectContent>
                                 </Select>
                                 <FormMessage />
@@ -189,7 +292,9 @@ Email Notifications System by Amish Sharma
                             )}
                         />
                         </div>
-                        <Button type="submit" className="w-full" size="lg">Request Appointment</Button>
+                        <Button type="submit" className="w-full" size="lg" disabled={loading}>
+                            {loading ? 'Submitting...' : 'Request Appointment'}
+                        </Button>
                     </form>
                     </Form>
                 </CardContent>

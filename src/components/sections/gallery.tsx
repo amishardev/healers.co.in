@@ -37,14 +37,14 @@ const images = [
 const GalleryImage = ({ image }: { image: typeof images[0] }) => (
     <Dialog>
         <DialogTrigger asChild>
-            <div className="overflow-hidden rounded-lg cursor-pointer group">
+            <div className="overflow-hidden rounded-lg cursor-pointer group aspect-square">
                 <Image
                     src={image.src}
                     alt={image.alt}
                     data-ai-hint={image.hint}
                     width={400}
-                    height={300}
-                    className="object-cover w-full h-full aspect-square transform transition-transform duration-300 group-hover:scale-110"
+                    height={400}
+                    className="object-cover w-full h-full transform transition-transform duration-300 group-hover:scale-110"
                 />
             </div>
         </DialogTrigger>
@@ -77,37 +77,28 @@ export function Gallery() {
                         A glimpse into our welcoming and healing environment.
                     </p>
                 </div>
-                {/* Desktop Grid */}
-                <div className="hidden md:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    {images.map((image, index) => (
-                        <GalleryImage key={index} image={image} />
-                    ))}
-                </div>
-                {/* Mobile Carousel */}
-                <div className="md:hidden">
-                    <Carousel
-                      plugins={[plugin.current]}
-                      opts={{
-                        align: "start",
-                        loop: true,
-                      }}
-                      className="w-full max-w-sm mx-auto"
-                      onMouseEnter={plugin.current.stop}
-                      onMouseLeave={plugin.current.reset}
-                    >
-                        <CarouselContent>
-                            {images.map((image, index) => (
-                                <CarouselItem key={index} className="basis-4/5">
-                                    <div className="p-1">
-                                      <GalleryImage image={image} />
-                                    </div>
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                        <CarouselPrevious className="ml-12" />
-                        <CarouselNext className="mr-12" />
-                    </Carousel>
-                </div>
+                <Carousel
+                    plugins={[plugin.current]}
+                    opts={{
+                    align: "start",
+                    loop: true,
+                    }}
+                    className="w-full"
+                    onMouseEnter={plugin.current.stop}
+                    onMouseLeave={plugin.current.reset}
+                >
+                    <CarouselContent className="-ml-4">
+                        {images.map((image, index) => (
+                            <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                                <div className="p-1">
+                                    <GalleryImage image={image} />
+                                </div>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="ml-12" />
+                    <CarouselNext className="mr-12" />
+                </Carousel>
             </div>
         </section>
     );

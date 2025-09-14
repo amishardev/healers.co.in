@@ -6,20 +6,26 @@ const contactDetails = [
   {
     icon: MapPin,
     title: "Address",
-    value: "710, Vikas Nagar, Khyora, Kanpur, Uttar Pradesh 208024, India",
-    href: "https://www.google.com/maps/search/?api=1&query=710,+Vikas+Nagar,+Khyora,+Kanpur,+Uttar+Pradesh+208024",
+    value: "246/A, Vikas Nagar, Near Bima Vihar Post Office, Kanpur, Uttar Pradesh 208024",
+    href: "https://www.google.com/maps/search/?api=1&query=246/A,+Vikas+Nagar,+Near+Bima+Vihar+Post+Office,+Kanpur,+Uttar+Pradesh+208024",
   },
   {
     icon: Phone,
     title: "Phone",
-    value: "+91 987 654 3210",
-    href: "tel:+919876543210",
+    value: "+91 6387700189",
+    href: "tel:+916387700189",
+  },
+  {
+    icon: Phone,
+    title: "WhatsApp",
+    value: "+91 9935993447",
+    href: "https://wa.me/919935993447",
   },
   {
     icon: Mail,
     title: "Email",
-    value: "healingartclinic@gmail.com",
-    href: "mailto:healingartclinic@gmail.com",
+    value: "askhealers@gmail.com",
+    href: "mailto:askhealers@gmail.com",
   },
 ]
 
@@ -52,7 +58,7 @@ export function Contact() {
           <Card className="overflow-hidden">
             <CardContent className="p-0 h-full">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3571.956557991957!2d80.28394!3d26.4561008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c375535561a3b%3A0x2863a9f029c29a8a!2s710%2C%20Vikas%20Nagar%2C%20Khyora%2C%20Kanpur%2C%20Uttar%20Pradesh%20208024!5e0!3m2!1sen!2sin"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3571.956557991957!2d80.28394!3d26.4561008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c375535561a3b%3A0x2863a9f029c29a8a!2s246%2FA%2C%20Vikas%20Nagar%2C%20Khyora%2C%20Kanpur%2C%20Uttar%20Pradesh%20208024!5e0!3m2!1sen!2sin"
                 style={{ border: 0 }}
                 allowFullScreen={true}
                 loading="lazy"
