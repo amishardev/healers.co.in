@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  transpilePackages: ['react'],
+  externals: {
+    'react/jsx-dev-runtime': 'react/jsx-dev-runtime',
+  },
   images: {
     remotePatterns: [
       {
