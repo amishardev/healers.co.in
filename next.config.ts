@@ -1,16 +1,11 @@
-import type {NextConfig} from 'next';
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   /* config options here */
   typescript: {
     ignoreBuildErrors: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
-  },
-  transpilePackages: ['react'],
-  externals: {
-    'react/jsx-dev-runtime': 'react/jsx-dev-runtime',
   },
   images: {
     remotePatterns: [
